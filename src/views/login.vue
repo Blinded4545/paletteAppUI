@@ -4,11 +4,12 @@
       <div id="logintxt">
         <h1>Log In</h1>
       </div>
+      <!---Cambia el como se ve, ya tienes la idea de como-->
       <div>
-        <input class="form" placeholder="User" v-model="usr"/>
+        <input class="form" placeholder="User" v-model="usr" />
       </div>
       <div>
-        <input class="form" placeholder="Password" v-model="pwd"/>
+        <input class="form" placeholder="Password" v-model="pwd" />
       </div>
       <div>
         <button id="logInbutton" @click="login">Log In</button>
@@ -21,92 +22,106 @@
 </template>
 
 <script>
-
-export default{
+export default {
   name: "loginView",
-  data(){
+  data() {
     return {
       usr: "",
       pwd: "",
-      badLogin: false
-    }
+      badLogin: false,
+    };
   },
   methods: {
-    login(){
+    login() {
       console.log(this.usr, this.pwd);
+      this.$router.push("/home");
     },
-    register(){
-
-    }
-  }
-}
-
+    register() {},
+  },
+};
 </script>
 
 <style>
-
-#login{
+#login {
   width: 100%;
   height: 100vh;
   margin: 0;
   display: grid;
+  text-align: center;
   align-content: center;
   justify-content: center;
-  background: linear-gradient(260deg, #2874A6, #148F77);
+  background: linear-gradient(0deg, #072541, #5272f2);
 }
 
-#wrapper{
-  border: 1px black solid;
+#wrapper {
   border-radius: 10px;
-  width:fit-content;
-  background-color: rgba(26, 188, 156, .6);
+  width: fit-content;
+  background-color: rgba(26, 188, 156, 0.5);
+  backdrop-filter: blur(100%);
+  justify-items: center;
+  display: grid;
 }
 
-#logintxt{
-  margin: 10px;
+#logintxt {
+  margin-top: 4rem;
+  margin-bottom: 3rem;
+  background-color: rgba(248, 189, 235, 0.3);
+  backdrop-filter: blur(40px);
+  width: 12rem;
+  border-radius: 70px;
 }
 
-.form{
+.form {
+  transform: scale(1.2);
   padding: 5px;
-  margin: 5px 20px 10px 20px;
+  margin: 5px 5rem 1.5rem 5rem;
   border-radius: 10px;
   border: none;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
+  background-color: #fbecb2;
 }
-.form:hover{
-  transform: scale(1.1);
+.form:hover {
+  transform: scale(1.4);
 }
-.form:focus{
-  transform: scale(1.1);
-  background-color: #58D68D;
+.form:focus {
+  transform: scale(1.4);
+  background-color: #f8bdeb;
   outline: none;
 }
-.form::placeholder{
+.form::placeholder {
   padding-left: 5%;
   transform: scale(1.1);
   border: none;
 }
 
-#logInbutton{
-  
-  font-size: 1.25rem;
+#logInbutton {
+  font-size: 1.8rem;
 }
-#logInbutton, #register{
+#logInbutton,
+#register {
   padding: 5px 15px;
   border: none;
-  border-radius: 10px;
+  border-radius: 20px;
   margin-bottom: 10px;
   transition: all 0.3s linear;
+  background-color: rgba(248, 189, 235, 0.3);
 }
-#register{
-  margin-bottom: 15px;
+#logInbutton {
+  margin-top: 0.75rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+#register {
+  margin-top: calc(1rem - 5px);
+  margin-bottom: 3rem;
 }
 
-#logInbutton:hover{
-  transform: scale(1.3);
+#logInbutton:hover {
+  transform: scale(1.2);
+  background-color: rgba(248, 189, 235, 0.8);
 }
-#register:hover{
-  transform: scale(1.3);
+#register:hover {
+  transform: scale(1.2);
+  background-color: rgba(248, 189, 235, 0.8);
 }
-
 </style>
