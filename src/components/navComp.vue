@@ -18,7 +18,13 @@
           value="colorUI"
           @click="savedPalettes"
           v-bind:active="savedActive"
-          id="saveP"
+        ></v-list-item>
+        <v-list-item
+          prepend-icon="mdi-information"
+          title="About"
+          value="about"
+          @click="about"
+          v-bind:active="aboutActive"
         ></v-list-item>
       </v-list>
       <template v-slot:append>
@@ -42,6 +48,7 @@ export default {
     return {
       savedActive: false,
       generActive: false,
+      aboutActive: false,
     };
   },
   methods: {
@@ -50,6 +57,9 @@ export default {
     },
     savedPalettes() {
       this.$router.push("/savedPalettes");
+    },
+    about() {
+      this.$router.push("/about");
     },
     logOut() {
       this.$router.push("/");
@@ -61,10 +71,18 @@ export default {
       console.log("home");
       this.generActive = true;
       this.savedActive = false;
+      this.aboutActive = false;
     }
     if (window.location.href.match("/savedPalettes")) {
       console.log("saved");
       this.savedActive = true;
+      this.generActive = false;
+      this.aboutActive = false;
+    }
+    if (window.location.href.match("/about")) {
+      console.log("saved");
+      this.aboutActive = true;
+      this.savedActive = false;
       this.generActive = false;
     }
   },

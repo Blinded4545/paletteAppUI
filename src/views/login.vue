@@ -18,6 +18,12 @@
         <button id="register" @click="register">Register</button>
       </div>
     </div>
+    <div v-if="badLogin">
+      <h3 class="bg-red">Usuario o contrasena incorrecta</h3>
+    </div>
+    <div v-if="badRegister">
+      <h3 class="bg-red">Error</h3>
+    </div>
   </div>
 </template>
 
@@ -29,14 +35,43 @@ export default {
       usr: "",
       pwd: "",
       badLogin: false,
+      badRegister: false,
     };
   },
   methods: {
     login() {
-      console.log(this.usr, this.pwd);
-      this.$router.push("/home");
+      fetch("http://192.168.1.8:3000/login", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          usr: this.usr,
+          pw: this.pwd,
+        }),
+      }).then((response) => {
+        if (response.status == 200) {
+          this.$router.push("/home");
+        } else {
+          this.badLogin = true;
+          this.badRegister = false;
+        }
+      });
     },
-    register() {},
+    register() {
+      fetch("http://192.168.1.8:3000/register", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          usr: this.usr,
+          pw: this.pwd,
+        }),
+      }).then((response) => {
+        if (response.status == 200) {
+          this.$router.push("/home");
+        } else {
+          this.badRegister = true;
+        }
+      });
+    },
   },
 };
 </script>

@@ -54,6 +54,7 @@ export default {
       randColor: "",
       currentColor: "",
       colorPalette: ["#6d2b29", "#b78b49", "#e8ae6c", "#d4a86b", "#5b5837"],
+      user: "Camilo",
     };
   },
 
@@ -62,8 +63,35 @@ export default {
       this.currentColor = eventData["cssColor"];
       this.colorPalette[0] = this.currentColor;
     },
-    generatePalette() {},
-    savePalette() {},
+    generatePalette() {
+      fetch("http://192.168.1.8:3000/generate", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ color: this.currentColor }),
+      }).then((response) => {
+        response.json().then((data) => {
+          this.colorPalette = [
+            data[0]["value"],
+            data[1]["value"],
+            data[2]["value"],
+            data[3]["value"],
+            data[4]["value"],
+          ];
+          this.currentColor = data[0]["value"];
+          console.log(data);
+        });
+      });
+    },
+    savePalette() {
+      fetch("http://192.168.1.8:3000/postPalettes", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          usr: this.user,
+          colors: this.colorPalette,
+        }),
+      });
+    },
   },
 
   created() {
