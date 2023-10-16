@@ -12,7 +12,7 @@
         <input class="form" placeholder="Password" v-model="pwd" />
       </div>
       <div>
-        <button id="logInbutton" @click="login">Log In</button>
+        <button class="btn" @click="login">Log In</button>
       </div>
       <div>
         <button id="register" @click="register">Register</button>
@@ -49,6 +49,7 @@ export default {
         }),
       }).then((response) => {
         if (response.status == 200) {
+          this.$cookies.set("UserSession", this.usr, "1h");
           this.$router.push("/home");
         } else {
           this.badLogin = true;
@@ -66,6 +67,7 @@ export default {
         }),
       }).then((response) => {
         if (response.status == 200) {
+          this.$cookies.set("UserSession", this.usr, "1h");
           this.$router.push("/home");
         } else {
           this.badRegister = true;
@@ -129,10 +131,7 @@ export default {
   border: none;
 }
 
-#logInbutton {
-  font-size: 1.8rem;
-}
-#logInbutton,
+.btn,
 #register {
   padding: 5px 15px;
   border: none;
@@ -141,7 +140,8 @@ export default {
   transition: all 0.3s linear;
   background-color: rgba(248, 189, 235, 0.3);
 }
-#logInbutton {
+.btn {
+  font-size: 1.8rem;
   margin-top: 0.75rem;
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -151,7 +151,7 @@ export default {
   margin-bottom: 3rem;
 }
 
-#logInbutton:hover {
+.btn:hover {
   transform: scale(1.2);
   background-color: rgba(248, 189, 235, 0.8);
 }

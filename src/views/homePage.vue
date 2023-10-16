@@ -31,11 +31,51 @@
             <button @click="generatePalette">Generate new palette</button>
           </div>
           <div id="saveBtn">
-            <button @click="savePalette">Save Palette</button>
+            <button @click="showOverlay">Save Palette</button>
           </div>
         </div>
       </div>
     </div>
+    <v-overlay
+      id="saveName"
+      v-model="overlay"
+      scrim="rgba(150, 150, 150, 0.6)"
+      style="backdrop-filter: blur(20px)"
+      class="align-center justify-center"
+    >
+      <div
+        style="
+          background-color: rgba(200, 200, 200, 1);
+          height: 15rem;
+          display: grid;
+          border-radius: 20px;
+        "
+        class="justify-center align-center"
+      >
+        <div style="padding-top: 3rem">
+          <input
+            class="form"
+            placeholder="Name"
+            v-model="name"
+            style="display: block; margin-bottom: 0"
+          />
+        </div>
+        <div style="margin-top: 1rem; margin-bottom: 3rem">
+          <button
+            class="btn"
+            @click="savePalette"
+            style="
+              margin-left: 23%;
+              font-size: 1.3rem;
+              margin-top: 0;
+              background-color: rgb(252, 169, 234);
+            "
+          >
+            Save Palette
+          </button>
+        </div>
+      </div>
+    </v-overlay>
   </div>
 </template>
 
@@ -54,7 +94,8 @@ export default {
       randColor: "",
       currentColor: "",
       colorPalette: ["#6d2b29", "#b78b49", "#e8ae6c", "#d4a86b", "#5b5837"],
-      user: "Camilo",
+      name: "",
+      overlay: false,
     };
   },
 
@@ -82,15 +123,22 @@ export default {
         });
       });
     },
+    showOverlay() {
+      this.overlay = true;
+    },
     savePalette() {
+      console.log(this.name);
       fetch("http://192.168.1.8:3000/postPalettes", {
         method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify({
-          usr: this.user,
+          usr: this.$cookies.get("UserSession"),
           colors: this.colorPalette,
+          name: this.name,
         }),
       });
+      this.name = "";
+      this.overlay = false;
     },
   },
 
@@ -244,6 +292,7 @@ html {
 /********** MEDIA QUERY **********/
 @media (min-width: 642px) {
   #bgWrapper {
+    overflow: hidden;
     margin: 0;
     /* text-align: center; */
     min-width: 100%;

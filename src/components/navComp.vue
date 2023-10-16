@@ -62,25 +62,22 @@ export default {
       this.$router.push("/about");
     },
     logOut() {
+      this.$cookies.remove("UserSession");
       this.$router.push("/");
     },
   },
   created() {
-    console.log(typeof window.location.href);
     if (window.location.href.match("/home")) {
-      console.log("home");
       this.generActive = true;
       this.savedActive = false;
       this.aboutActive = false;
     }
     if (window.location.href.match("/savedPalettes")) {
-      console.log("saved");
       this.savedActive = true;
       this.generActive = false;
       this.aboutActive = false;
     }
     if (window.location.href.match("/about")) {
-      console.log("saved");
       this.aboutActive = true;
       this.savedActive = false;
       this.generActive = false;
@@ -91,6 +88,7 @@ export default {
 
 <style>
 #logOut {
+  padding-left: 0.5rem;
   transition: all 0.5s ease;
 }
 #logOut:hover {
